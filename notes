@@ -9,3 +9,14 @@ I want to create an app where a User can
 An Artist has_many Songs
 A Song belongs_to an Artist
 User can CRUD resource 
+
+
+1. I need users
+  URLS
+    GET /signup #=> see a form
+    POST /users #=> to actually create the user
+  database
+    I need a users table to store their email and password
+2. I need to give users passwords
+3. Then find a user with their actual password
+4. change login system to use email and password to authenticate

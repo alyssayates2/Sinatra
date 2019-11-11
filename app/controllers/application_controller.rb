@@ -8,12 +8,19 @@ class ApplicationController < Sinatra::Base
     set :session_secret, 'password_security'
   end
 
-  get '/' do
-    session[:greeting] = "Hello World"
-    "Hello World!"
+  helpers do
+    def logged_in?
+      !!session[:email]
+    end
+
+    def login(email)
+      session[:email] = email
+    end
+
+    def logout!
+      session.clear
+    end
   end
 
-  get '/remember' do
-    session[:greeting]
-  end
+
 end
