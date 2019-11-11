@@ -1,0 +1,11 @@
+Hi
+
+I want to create an app where a User can
+
+1. Users can Create Account/Log in
+2. Users can access playlist when logged in
+3. Users can log out
+
+An Artist has_many Songs
+A Song belongs_to an Artist
+User can CRUD resource 
