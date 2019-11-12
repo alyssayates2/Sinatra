@@ -4,14 +4,18 @@ class SessionsController < ApplicationController
     erb :"sessions/login.html"
   end
 
+  post '/login' do
+    erb :'posts/show'
+  end
+
   post '/sessions' do
-    login(params[:email])
+    login(params[:email], params[:password])
     redirect '/posts'
   end
 
   get '/logout' do
     logout!
-    redirect '/posts'
+    erb :index
   end
 
 end

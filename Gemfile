@@ -1,13 +1,18 @@
 source "https://rubygems.org"
 
-gem 'sinatra'
-gem 'sqlite3'
-gem 'activerecord', :require => "active_record"
-gem 'rake'
-gem 'pry'
-gem 'sinatra-activerecord', :require => 'sinatra/activerecord'
-gem 'require_all'
-gem 'thin'
-gem 'shotgun'
-gem 'tux'
-gem 'corneal'
+ gem 'sinatra'
+ gem 'thin'
+ gem 'require_all'
+ gem 'activerecord', '5.2'
+ gem 'sinatra-activerecord'
+ gem 'rake'
+ gem 'corneal'
+ gem 'bcrypt', '~> 3.1.7'
+
+
+ group :development do
+   gem 'shotgun'
+   gem 'pry'
+   gem 'tux'
+   gem 'sqlite3', '~> 1.3.6'
+ end
