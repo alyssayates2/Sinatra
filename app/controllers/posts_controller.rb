@@ -15,15 +15,8 @@ class PostsController < ApplicationController
     @post.content = params[:content]
     @post.save
 
-    redirect "/posts/#{@post.id}/show"
+    redirect "/posts/show"
 
-  end
-
-  get '/posts/:id/show' do
-    @post = Post.new
-    @post.title = params[:title]
-    @post.content = params[:content]
-    erb :"posts/show"
   end
 
   get '/posts/:id/edit' do
@@ -36,28 +29,12 @@ class PostsController < ApplicationController
     @post.title = params[:title]
     @post.content = params[:content]
     @post.save
-    redirect "/posts/#{@post.id}"
+    redirect "/posts"
   end
 
   delete '/posts/:id' do
     @post = Post.find(params[:id])
     @post.destroy
     redirect "/posts"
-  end
-
-  get '/posts/:id/user' do
-    if logged_in?
-      @post = Post.find(params[:id])
-      if @post.user.id == current_user.id
-        erb :'/posts/user'
-      end
-    end
-  end
-
-  get '/posts/:id' do
-    @post = Post.new
-    @post.title = params[:title]
-    @post.content = params[:content]
-    erb :"posts/show"
   end
 end

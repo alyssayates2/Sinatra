@@ -13,3 +13,10 @@
 
   <input type="submit" id="submit" />
 </form>
+
+<p>
+  <form method="post" action="/posts/<%= @post.id %>">
+    <input type="hidden" name="_method" value="delete" />
+    <input type="submit" value="Delete" />
+  </form>
+</p>
