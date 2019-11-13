@@ -10,31 +10,33 @@ class PostsController < ApplicationController
   end
 
   post '/posts' do
-    @post = Post.new
-    @post.title = params[:title]
-    @post.content = params[:content]
-    @post.save
+    @post = Post.create(:title => params[:title], :content => params[:content], :user_id => params[:user_id])
+    redirect to "/posts/#{@post.id}"
+  end
 
-    redirect "/posts/show"
-
+  get '/posts/:id' do
+    @post = Post.find_by_id(params[:id])
+    title = Post.find(params[:title])
+    erb :"/posts/show"
   end
 
   get '/posts/:id/edit' do
-    @post = Post.find(params[:id])
+    @post = Post.find_by_id(params[:id])
     erb :"posts/edit"
   end
 
   patch '/posts/:id' do
-    @post = Post.find(params[:id])
+    @post = Post.find_by_id(params[:id])
     @post.title = params[:title]
     @post.content = params[:content]
+    @post.user_id = params[:user_id]
     @post.save
-    redirect "/posts"
+    redirect to "/posts/#{@post.id}"
   end
 
-  delete '/posts/:id' do
-    @post = Post.find(params[:id])
-    @post.destroy
+  delete '/posts/:id/delete' do
+    @post = Post.find_by_id(params[:id])
+    @post.delete
     redirect "/posts"
   end
 end

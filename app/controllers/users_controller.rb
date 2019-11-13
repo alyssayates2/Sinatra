@@ -33,4 +33,8 @@ class UsersController < ApplicationController
  post '/sessions' do
    erb :"posts/new"
   end
+
+  get '/posts/2' do
+    erb :"posts/edit"
+  end
 end
