@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
       session[:id] = user.id
-      redirect '/posts/index'
+      redirect '/posts/new'
     else
       redirect "/"
     end

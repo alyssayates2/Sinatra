@@ -19,13 +19,17 @@ class PostsController < ApplicationController
 
   end
 
-  get '/posts/:id' do
+  get '/posts/:id/show' do
     @post = Post.new
     @post.title = params[:title]
     @post.content = params[:content]
     erb :"posts/show"
   end
 
+  get '/posts/:id/edit' do
+    @post = Post.find(params[:id])
+    erb :"posts/edit"
+  end
 
   patch '/posts/:id' do
     @post = Post.find(params[:id])
@@ -41,21 +45,19 @@ class PostsController < ApplicationController
     redirect "/posts"
   end
 
-  get '/posts/:id/edit' do
-    @post = Post.find(params[:id])
-    erb :"posts/edit"
-  end
-
   get '/posts/:id/user' do
     if logged_in?
       @post = Post.find(params[:id])
       if @post.user.id == current_user.id
         erb :'/posts/user'
       end
-    else
-      redirect '/'
     end
   end
 
-
+  get '/posts/:id' do
+    @post = Post.new
+    @post.title = params[:title]
+    @post.content = params[:content]
+    erb :"posts/show"
+  end
 end
