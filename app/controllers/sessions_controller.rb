@@ -5,17 +5,17 @@ class SessionsController < ApplicationController
   end
 
   post '/login' do
-    erb :'posts/show'
-  end
-
-  post '/sessions' do
-    login(params[:email], params[:password])
-    redirect '/posts'
+    user = User.find_by(email: params[:email])
+    if user && user.authenticate(params[:password])
+      session[:id] = user.id
+      redirect '/posts/index'
+    else
+      redirect "/"
+    end
   end
 
   get '/logout' do
     logout!
     erb :index
   end
-
 end

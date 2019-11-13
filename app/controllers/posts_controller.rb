@@ -2,19 +2,11 @@ class PostsController < ApplicationController
 
   get '/posts' do
     @posts = Post.all
-    if !logged_in?
-      redirect "/login"
-    else
-      erb :"posts/index"
-    end
+    erb :"posts/index"
   end
 
   get '/posts/new' do
-    if !logged_in?
-      redirect "/login"
-    else
       erb :"posts/new"
-    end
   end
 
   post '/posts' do
@@ -23,21 +15,15 @@ class PostsController < ApplicationController
     @post.content = params[:content]
     @post.save
 
-    if !logged_in?
-      redirect "/login"
-    else
-      redirect "/posts/#{@post.id}"
-    end
+    redirect "/posts/#{@post.id}/show"
+
   end
 
   get '/posts/:id' do
-    @post = Post.find(params[:id])
-
-    if !logged_in?
-      redirect "/login"
-    else
-      erb :"posts/show"
-    end
+    @post = Post.new
+    @post.title = params[:title]
+    @post.content = params[:content]
+    erb :"posts/show"
   end
 
 
@@ -46,31 +32,28 @@ class PostsController < ApplicationController
     @post.title = params[:title]
     @post.content = params[:content]
     @post.save
-
-    if !logged_in?
-      redirect "/login"
-    else
-      redirect "/posts/#{@post.id}"
-    end
+    redirect "/posts/#{@post.id}"
   end
 
   delete '/posts/:id' do
     @post = Post.find(params[:id])
     @post.destroy
-
-    if !logged_in?
-      redirect "/login"
-    else
-      redirect "/posts"
-    end
+    redirect "/posts"
   end
 
   get '/posts/:id/edit' do
-    if !logged_in?
-      redirect "/login"
+    @post = Post.find(params[:id])
+    erb :"posts/edit"
+  end
+
+  get '/posts/:id/user' do
+    if logged_in?
+      @post = Post.find(params[:id])
+      if @post.user.id == current_user.id
+        erb :'/posts/user'
+      end
     else
-      post = current_user.posts.find(params[:id])
-        "An edit form #{current_user.id} is editing #{post.id}"
+      redirect '/'
     end
   end
 
