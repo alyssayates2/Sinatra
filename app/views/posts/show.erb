@@ -1,1 +1,3 @@
-<h1><%= @post%></h1>
+<% @posts.each do |post| %>
+  <input type="checkbox" name="owner[post_ids][]" id="<%= post.id %>" value="<%= post.id %>"><%= post.name %><br>
+<% end %>

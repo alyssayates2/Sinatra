@@ -1,3 +1,4 @@
+require 'pry'
 class PostsController < ApplicationController
 
   get '/posts' do
@@ -6,20 +7,15 @@ class PostsController < ApplicationController
   end
 
   get '/posts/new' do
-    @post = Post.create(post_params.merge(user_id: current_user.id))
       erb :"posts/new"
   end
 
   post '/posts' do
+    binding.pry
     @post = Post.create(:title => params[:title], :content => params[:content], :user_id => params[:user_id])
-    redirect to "/posts/#{@post.id}"
+    redirect to "/posts"
   end
 
-  get '/posts/:id' do
-    @post = Post.find_by_id(params[:id])
-    title = Post.find(params[:title])
-    erb :"/posts/show"
-  end
 
   get '/posts/:id/user' do
     @user = User.find_by_id(params[:id])
