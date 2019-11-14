@@ -6,6 +6,7 @@ class PostsController < ApplicationController
   end
 
   get '/posts/new' do
+    @post = Post.create(post_params.merge(user_id: current_user.id))
       erb :"posts/new"
   end
 
@@ -21,8 +22,9 @@ class PostsController < ApplicationController
   end
 
   get '/posts/:id/user' do
-    @post = Post.find_by_id(params[:id])
-    erb :"/posts/show"
+    @user = User.find_by_id(params[:id])
+    @posts = @user
+
   end
 
 
