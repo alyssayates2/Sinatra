@@ -2,7 +2,7 @@ require 'pry'
 class PostsController < ApplicationController
 
   get '/posts' do
-    @posts = Post.all
+    @posts = current_user.posts
     erb :"posts/index"
   end
 
@@ -11,7 +11,7 @@ class PostsController < ApplicationController
   end
 
   post '/posts' do
-    binding.pry
+    # binding.pry
     @post = Post.create(:title => params[:title], :content => params[:content], :user_id => params[:user_id])
     redirect to "/posts"
   end
@@ -38,7 +38,7 @@ class PostsController < ApplicationController
     redirect to "/posts/#{@post.id}"
   end
 
-  delete '/posts/:id/delete' do
+  delete '/posts/:id' do
     @post = Post.find_by_id(params[:id])
     @post.delete
     redirect "/posts"
