@@ -11,20 +11,19 @@ class PostsController < ApplicationController
   end
 
   post '/posts' do
-    # binding.pry
     @post = Post.create(:title => params[:title], :content => params[:content], :user_id => params[:user_id])
     redirect to "/posts"
   end
 
 
-  get '/posts/:id/user' do
-    @user = User.find_by_id(params[:id])
-    @posts = @user
-
+  get '/posts/:id' do
+    @post = Post.find_by_id(params[:id])
+    erb :'/posts/show'
   end
 
 
   get '/posts/:id/edit' do
+    @user = current_user
     @post = Post.find_by_id(params[:id])
     erb :"posts/edit"
   end

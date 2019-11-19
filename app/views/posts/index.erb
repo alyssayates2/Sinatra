@@ -5,7 +5,8 @@
     <li>
         <%= post.title %>
       </a>
-      <p><%= post.content %>
+      <p><%= post.content %><br>
+        <a href="/posts/<%=post.id%>/edit">Edit</a>
     </li>
   <% end %>
 </ol>
