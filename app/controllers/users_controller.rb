@@ -15,7 +15,7 @@ class UsersController < ApplicationController
      user = User.new
      user.save
      session[:id] = user.id
-     erb :"posts/new"
+     erb :"sessions/login.html"
    end
  end
 
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
    @user.email = params[:email]
    @user.password = params[:password]
    if @user.save
-     redirect '/login'
+     erb :"sessions/login.html"
    else
      erb :'users/signup.html'
    end
