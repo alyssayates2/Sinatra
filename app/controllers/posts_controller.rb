@@ -2,6 +2,11 @@ require 'pry'
 class PostsController < ApplicationController
 
   get '/posts' do
+    @posts = Post.all
+    erb :"posts/index"
+  end
+
+  get '/user/posts' do
     @posts = current_user.posts
     erb :"posts/index"
   end
@@ -11,7 +16,7 @@ class PostsController < ApplicationController
   end
 
   post '/posts' do
-    @post = Post.create(:title => params[:title], :content => params[:content], :user_id => params[:user_id])
+    @post = current_user.posts.create(:title => params[:title], :content => params[:content])
     redirect to "/posts"
   end
 
@@ -32,7 +37,6 @@ class PostsController < ApplicationController
     @post = Post.find_by_id(params[:id])
     @post.title = params[:title]
     @post.content = params[:content]
-    @post.user_id = params[:user_id]
     @post.save
     redirect to "/posts/#{@post.id}"
   end
