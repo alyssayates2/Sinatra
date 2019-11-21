@@ -1,5 +1,4 @@
-# Sinatra
-Portfolio Project
+# Sinatra Portfolio Project
 
 Welcome to the spot of documenting and sharing your most embarrassing stories! 
 
