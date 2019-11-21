@@ -2,8 +2,12 @@ require 'pry'
 class PostsController < ApplicationController
 
   get '/posts' do
-    @posts = Post.all
-    erb :"posts/index"
+    if logged_in?
+      @posts = Post.all
+      erb :"posts/index"
+    else
+      redirect "/login"
+    end 
   end
 
   get '/user/posts' do
