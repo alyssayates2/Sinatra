@@ -15,30 +15,14 @@ class PostsController < ApplicationController
     erb :"posts/index"
   end
 
- #  post "/signup" do
- #   if params[:user].values.any?{|attribute| attribute == ""}
- #     redirect "/signup"
- #   else
- #     @user = User.new(params[:user])
- #     @user.save
- #     session[:id] = @user.id
- #     erb :"sessions/login.html"
- #   end
- # end
-
   get '/posts/new' do
       erb :"posts/new"
   end
 
   post '/posts' do
-    binding.pry
     @post = current_user.posts.build(:title => params[:title], :content => params[:content])
-    if @post(:title => params[:title], :content => params[:content]).any?{|attribute| attribute == ""}
-      redirect "/posts/new"
-    else
-      @post.save
-      redirect to "/posts"
-    end
+    @post.save
+    redirect to "/posts"
   end
 
 
@@ -49,22 +33,33 @@ class PostsController < ApplicationController
 
 
   get '/posts/:id/edit' do
-    @user = current_user
     @post = Post.find_by_id(params[:id])
-    erb :"posts/edit"
+      if @post.user != current_user
+        redirect to "/"
+      else
+        erb :"posts/edit"
+      end
   end
 
   patch '/posts/:id' do
     @post = Post.find_by_id(params[:id])
-    @post.title = params[:title]
-    @post.content = params[:content]
-    @post.save
-    redirect to "/posts/#{@post.id}"
+    if @post.user != current_user
+      redirect to "/"
+    else
+      @post.title = params[:title]
+      @post.content = params[:content]
+      @post.save
+      redirect to "/posts/#{@post.id}"
+    end
   end
 
   delete '/posts/:id' do
     @post = Post.find_by_id(params[:id])
-    @post.delete
-    redirect "/posts"
+    if @post.user != current_user
+      redirect to "/"
+    else
+      @post.delete
+      redirect "/posts"
+    end
   end
 end
