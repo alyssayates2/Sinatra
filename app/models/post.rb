@@ -1,4 +1,4 @@
 class Post < ActiveRecord::Base
   belongs_to :user
-  validates :user, presence: true
+  validates :title, :content, presence: true
 end
